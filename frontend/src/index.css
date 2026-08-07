@@ -1,0 +1,662 @@
+/* ============================================================
+   Scientific Collaboration Network Analyzer — Global Styles
+   ============================================================ */
+
+/* ---------- Google Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #0f172a;
+  background-color: #f8fafc;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* ============================================================
+   STITCH LOGIN PAGE DESIGN (SCNA)
+   ============================================================ */
+
+.scna-stitch-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #0f172a;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ---------------- NAV BAR ---------------- */
+.scna-navbar {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  position: relative;
+  z-index: 10;
+}
+
+.scna-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.scna-logo {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: #0f2747;
+}
+
+.scna-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.scna-nav-item {
+  font-size: 0.925rem;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.scna-nav-item:hover {
+  color: #0f2747;
+}
+
+.scna-dropdown-arrow {
+  font-size: 0.75rem;
+  margin-left: 4px;
+}
+
+.scna-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.scna-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.scna-search-icon {
+  position: absolute;
+  left: 14px;
+  width: 16px;
+  height: 16px;
+  color: #94a3b8;
+}
+
+.scna-search-input {
+  padding: 8px 16px 8px 38px;
+  border-radius: 100px;
+  background: #f1f5f9;
+  border: 1px solid transparent;
+  font-size: 0.875rem;
+  color: #1e293b;
+  width: 220px;
+  transition: all 0.2s ease;
+}
+
+.scna-search-input:focus {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 0 0 3px rgba(15, 39, 71, 0.08);
+}
+
+.scna-nav-login-btn {
+  padding: 8px 24px;
+  border-radius: 100px;
+  background: #0f2747;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.scna-nav-login-btn:hover {
+  background: #1e3a8a;
+}
+
+.scna-lang-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.scna-lang-opt {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.scna-lang-opt.active,
+.scna-lang-opt:hover {
+  color: #0f2747;
+}
+
+.scna-lang-divider {
+  color: #cbd5e1;
+}
+
+/* ---------------- SPLIT CONTAINER ---------------- */
+.scna-split-container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  flex: 1;
+  min-height: calc(100vh - 72px);
+}
+
+/* ---------------- LEFT HERO PANEL ---------------- */
+.scna-hero-panel {
+  padding: 64px 80px 48px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fdfdfd;
+}
+
+.scna-hero-tagline {
+  font-size: 0.775rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #64748b;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.scna-headline-wrapper {
+  position: relative;
+}
+
+.scna-hero-title {
+  font-size: 3.4rem;
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  color: #0b192c;
+  margin-bottom: 28px;
+}
+
+.scna-highlight-container {
+  position: relative;
+  display: inline-block;
+}
+
+.scna-underline-swoosh {
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  pointer-events: none;
+}
+
+/* Decorative 3D Spheres Graphic */
+.scna-spheres-graphic {
+  position: absolute;
+  top: 10px;
+  right: -20px;
+  width: 140px;
+  height: 140px;
+  pointer-events: none;
+}
+
+.scna-sphere {
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(15, 39, 71, 0.25);
+  animation: floatSpheres 6s ease-in-out infinite alternate;
+}
+
+.sphere-main {
+  width: 72px;
+  height: 72px;
+  top: 30px;
+  left: 30px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  z-index: 3;
+}
+
+.sphere-sub1 {
+  width: 52px;
+  height: 52px;
+  top: 0px;
+  left: 0px;
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  z-index: 2;
+  animation-delay: -2s;
+}
+
+.sphere-sub2 {
+  width: 44px;
+  height: 44px;
+  bottom: 0px;
+  right: 0px;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  z-index: 1;
+  animation-delay: -4s;
+}
+
+@keyframes floatSpheres {
+  0% { transform: translateY(0px) rotate(0deg); }
+  100% { transform: translateY(-12px) rotate(6deg); }
+}
+
+.scna-register-link {
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #334155;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.scna-register-link:hover {
+  color: #1d4ed8;
+  transform: translateX(4px);
+}
+
+/* Hero Bottom Card Banner */
+.scna-hero-card {
+  margin-top: 48px;
+  background: #0b192c;
+  border-radius: 20px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  color: #ffffff;
+  box-shadow: 0 16px 36px rgba(11, 25, 44, 0.15);
+}
+
+.scna-card-img-wrapper {
+  width: 140px;
+  height: 90px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.scna-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scna-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.scna-card-text {
+  font-size: 0.775rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  color: #f1f5f9;
+}
+
+.scna-learn-more-btn {
+  padding: 6px 18px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  font-size: 0.775rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.scna-learn-more-btn:hover {
+  background: #ffffff;
+  color: #0b192c;
+}
+
+/* ---------------- RIGHT SATELLITE MAP PANEL ---------------- */
+.scna-map-panel {
+  position: relative;
+  background-color: #050e1a;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(30, 58, 138, 0.25), transparent 70%),
+    linear-gradient(rgba(11, 25, 44, 0.45), rgba(11, 25, 44, 0.6)),
+    url('/assets/login-map-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.scna-featured-tag {
+  position: absolute;
+  top: 36px;
+  left: 40px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Floating White Login Card */
+.scna-login-card {
+  width: 100%;
+  max-width: 440px;
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 36px 36px 28px 36px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+  animation: cardFadeIn 0.5s ease-out;
+}
+
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.scna-card-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f2747;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Role Segmented Bar */
+.scna-role-segmented-control {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 100px;
+  padding: 4px;
+  gap: 2px;
+  margin-bottom: 24px;
+}
+
+.scna-role-tab {
+  flex: 1;
+  padding: 7px 8px;
+  border-radius: 100px;
+  font-size: 0.725rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.scna-role-tab.active {
+  background: #0f2747;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(15, 39, 71, 0.2);
+}
+
+/* Form Controls */
+.scna-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.scna-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scna-field-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.scna-input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.scna-input-icon {
+  position: absolute;
+  left: 14px;
+  width: 18px;
+  height: 18px;
+  color: #94a3b8;
+}
+
+.scna-field-input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: #0f172a;
+  background: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.scna-field-input:focus {
+  border-color: #0f2747;
+  box-shadow: 0 0 0 3px rgba(15, 39, 71, 0.1);
+}
+
+.scna-pwd-toggle {
+  position: absolute;
+  right: 14px;
+  cursor: pointer;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.scna-pwd-toggle:hover {
+  color: #0f2747;
+}
+
+/* Form Options */
+.scna-form-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.scna-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.scna-checkbox-input {
+  accent-color: #0f2747;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.scna-forgot-link {
+  color: #3b82f6;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.scna-forgot-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Submit Button */
+.scna-submit-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 100px;
+  background: #0f2747;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 4px 14px rgba(15, 39, 71, 0.3);
+}
+
+.scna-submit-btn:hover {
+  background: #1e3a8a;
+  transform: translateY(-1px);
+}
+
+.scna-security-note {
+  text-align: center;
+  font-size: 0.725rem;
+  color: #94a3b8;
+  margin-top: 12px;
+}
+
+/* Carousel Controls */
+.scna-carousel-controls {
+  position: absolute;
+  bottom: 28px;
+  right: 32px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+}
+
+.scna-carousel-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+
+.scna-carousel-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.scna-carousel-counter {
+  font-size: 0.775rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ---------------- RESPONSIVE STYLES ---------------- */
+@media (max-width: 1024px) {
+  .scna-split-container {
+    grid-template-columns: 1fr;
+  }
+
+  .scna-map-panel {
+    min-height: 600px;
+  }
+
+  .scna-hero-panel {
+    padding: 48px 40px;
+  }
+
+  .scna-hero-title {
+    font-size: 2.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .scna-navbar {
+    padding: 0 20px;
+  }
+
+  .scna-nav-links {
+    display: none;
+  }
+
+  .scna-hero-panel {
+    padding: 32px 20px;
+  }
+
+  .scna-hero-title {
+    font-size: 2.1rem;
+  }
+
+  .scna-map-panel {
+    padding: 20px;
+  }
+
+  .scna-login-card {
+    padding: 24px 20px;
+  }
+
+  .scna-role-segmented-control {
+    flex-wrap: wrap;
+    border-radius: 12px;
+  }
+
+  .scna-role-tab {
+    flex: 1 1 45%;
+  }
+}
