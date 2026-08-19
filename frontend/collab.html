@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SCNA - Research Collaboration Board</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e6e8ea",
+                        "inverse-primary": "#afc8f0",
+                        "on-surface-variant": "#43474e",
+                        "secondary-container": "#58a6ff",
+                        "tertiary-fixed": "#dce3e8",
+                        "tertiary": "#02070a",
+                        "primary-fixed-dim": "#afc8f0",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface": "#f7f9fb",
+                        "on-primary-fixed": "#001c3a",
+                        "on-background": "#191c1e",
+                        "surface-container": "#eceef0",
+                        "primary-container": "#001f3f",
+                        "surface-tint": "#476083",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "outline": "#74777f",
+                        "inverse-surface": "#2d3133",
+                        "tertiary-fixed-dim": "#c0c7cc",
+                        "secondary-fixed": "#d3e4ff",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#80888c",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#0060aa",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "error-container": "#ffdad6",
+                        "primary": "#000613",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-primary-container": "#6f88ad",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#41484c",
+                        "on-secondary-container": "#003a6b",
+                        "on-primary-fixed-variant": "#2f486a",
+                        "primary-fixed": "#d4e3ff",
+                        "surface-bright": "#f7f9fb",
+                        "tertiary-container": "#192024",
+                        "secondary-fixed-dim": "#a2c9ff",
+                        "on-secondary-fixed-variant": "#004882",
+                        "error": "#ba1a1a",
+                        "background": "#f7f9fb",
+                        "on-tertiary-fixed": "#161d20",
+                        "on-secondary-fixed": "#001c38",
+                        "outline-variant": "#c4c6cf"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "stack-md": "16px",
+                        "gutter": "24px",
+                        "container-max": "1280px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "display-lg-mobile": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "button": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "display-lg-mobile": ["32px", { "lineHeight": "1.2", "fontWeight": "800" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
+                        "button": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased flex">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-surface-container-lowest text-primary border-r border-outline-variant shadow-md hidden lg:flex flex-col py-6 z-40">
+<div class="px-6 mb-8">
+<h2 class="font-headline-md text-headline-md text-primary">SCNA</h2>
+</div>
+<div class="px-6 mb-8 flex items-center gap-4">
+<img class="w-12 h-12 rounded-full object-cover shadow-sm" data-alt="Professional headshot of a female researcher with glasses, wearing a navy blazer, against a clean white laboratory background. Bright, modern lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD37F_yw1XZVV4vssLxXvQK6YtYWPXKUuVS5G8IrZ_qkfkGwMQX_7J5W_Q1cpKDepx4NUJO5Y0Pg3h75GBq1_uD_z4QEzqrSGCcur1elt2G4m3Zj0PDX7pBB1UWVzEaQXtaPbFeF5PZbYnS64sJZ63SGvjX6rSrp6BLpmBx8QgjFDlgt3g2kLQWFAZlzsx1PKOnb9QsLcH9bOUGrW-bbJL5Uj6qDV2wNyDS650IftKuEsRURje2cH_83Q"/>
+<div>
+<p class="font-label-md text-label-md text-primary">Dr. Elena Rossi</p>
+<p class="font-body-md text-[12px] text-on-surface-variant">Global Research Lead</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto font-label-md text-label-md">
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg flex items-center gap-3 px-4 py-3 mx-2 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+                Overview
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg flex items-center gap-3 px-4 py-3 mx-2 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">leaderboard</span>
+                Analytics
+            </a>
+<a class="bg-primary text-white rounded-lg flex items-center gap-3 px-4 py-3 mx-2 scale-95 active:scale-100 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
+                Network Map
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg flex items-center gap-3 px-4 py-3 mx-2 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">group</span>
+                Researchers
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg flex items-center gap-3 px-4 py-3 mx-2 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_balance</span>
+                Institutions
+            </a>
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg flex items-center gap-3 px-4 py-3 mx-2 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full bg-primary-container text-on-primary-container font-button text-button py-2 rounded-full mb-6 hover:bg-on-primary-fixed transition-colors">
+                New Analysis
+            </button>
+<nav class="font-label-md text-label-md">
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg flex items-center gap-3 px-4 py-2 mx-2 transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+                    Help Center
+                </a>
+<a class="text-on-surface-variant hover:bg-surface-container rounded-lg flex items-center gap-3 px-4 py-2 mx-2 transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+                    Log Out
+                </a>
+</nav>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 lg:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-white/90 backdrop-blur-md font-body-md text-body-md docked full-width top-0 sticky border-b border-outline-variant shadow-sm z-30 transition-all duration-200 ease-in-out hidden md:block">
+<div class="flex justify-between items-center h-16 w-full px-margin-desktop max-w-container-max mx-auto z-50">
+<div class="flex items-center gap-8">
+<h1 class="font-display-lg text-[24px] tracking-tight font-black text-primary lg:hidden">SCNA</h1>
+<nav class="hidden md:flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low py-2 px-3 rounded-md" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low py-2 px-3 rounded-md" href="#">Publications</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Collaborations</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-low py-2 px-3 rounded-md" href="#">Conferences</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-outline-variant rounded-full text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none w-64 transition-all" placeholder="Search network..." type="text"/>
+</div>
+<span class="text-on-surface-variant font-label-md text-label-md">EN | ES</span>
+<button class="bg-primary text-white px-6 py-2 rounded-full font-button text-button hover:bg-on-primary-fixed transition-colors">Login</button>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 p-margin-mobile md:p-margin-desktop max-w-container-max mx-auto w-full flex flex-col gap-gutter">
+<div class="flex justify-between items-end mb-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Collaboration Board</h2>
+<p class="text-on-surface-variant font-body-md text-body-md">Track research networks, active projects, and institutional partnerships.</p>
+</div>
+<button class="bg-white border border-primary text-primary px-4 py-2 rounded-full font-button text-button flex items-center gap-2 hover:bg-surface-container-low transition-colors shadow-sm">
+<span class="material-symbols-outlined">download</span> Export Report
+                </button>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Co-Author Network (Span 8) -->
+<section class="lg:col-span-8 bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-surface-variant flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-label-md text-[18px] font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">hub</span> Co-Author Network
+                        </h3>
+<button class="text-secondary font-label-md text-label-md hover:underline">View Full Graph</button>
+</div>
+<div class="flex-1 relative bg-surface-bright rounded-xl border border-surface-variant overflow-hidden min-h-[300px] flex items-center justify-center p-4">
+<!-- Abstract Representation of a Network Graph -->
+<div class="relative w-full max-w-md h-full flex items-center justify-center">
+<!-- Center Node -->
+<div class="absolute z-10 flex flex-col items-center">
+<img class="w-16 h-16 rounded-full border-4 border-white shadow-md z-10 relative" data-alt="Close up portrait of a senior researcher, male, grey hair, looking professional. Clean white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA20IWL3WqbJUhOQ8fNtoGD6ymVc2HLeAAizyV6dNArU4CV8qwrIbtfB2UEosI5kSRRGOxeBlqbBhCSKCcgPvw4xZhwNGWKL2_N0NOWcAQauPSHAulKvZbK3KAeKc05OTwN6BDFr0Ij9bJKfrjk6mtZY1nZVR7X0UWqUWPuqTK3ry-i8it4kUlBunImEstOAFNefux0exjxjQb89lgwK4cujn3Pl8QeQL_rBqh61MbKkMYf2NYa9P6XEA"/>
+<span class="bg-white px-2 py-1 rounded text-[10px] font-bold text-primary shadow-sm mt-1">Dr. H. Chen</span>
+</div>
+<!-- Connecting Lines (SVG) -->
+<svg class="absolute inset-0 w-full h-full" style="z-index: 0;">
+<line stroke="#c4c6cf" stroke-dasharray="4" stroke-width="2" x1="50%" x2="20%" y1="50%" y2="20%"></line>
+<line stroke="#c4c6cf" stroke-width="2" x1="50%" x2="80%" y1="50%" y2="30%"></line>
+<line stroke="#c4c6cf" stroke-width="2" x1="50%" x2="30%" y1="50%" y2="80%"></line>
+<line stroke="#0060aa" stroke-width="3" x1="50%" x2="70%" y1="50%" y2="70%"></line>
+</svg>
+<!-- Satellite Nodes -->
+<div class="absolute top-[10%] left-[10%] flex flex-col items-center">
+<img class="w-12 h-12 rounded-full border-2 border-white shadow-sm z-10 relative" data-alt="Portrait of a young female researcher, professional attire, plain background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGZW4vuXJArfotikQHy2H4UpSh_ax9QI1PXgIDtTLqdoLmz47-YOPqRBO8P464DMaaciDBUPRpqLUj8J7fQZS9n_mG_1Zr6N0iUQhPsAlIMeZYFkqc3_QUBbsuQGC8Aiq26ooUQGZZ2eofpSmC8phdWNC9I3eHfBJXKoHRidAdl_Qh6VHwNdt6Ekhbc7BqpZdOTovVmFaUJymkaE3rPeZatMcOl9IIsffT1bHRdU9fVdrrVaaXKLY7uA"/>
+<span class="bg-white px-2 py-1 rounded text-[10px] text-on-surface-variant shadow-sm mt-1">MIT</span>
+</div>
+<div class="absolute top-[20%] right-[10%] flex flex-col items-center">
+<img class="w-12 h-12 rounded-full border-2 border-white shadow-sm z-10 relative" data-alt="Portrait of a male researcher in a lab coat, plain background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDubPTWTsYPz2lRXJ6krE82f4znivnee2WAlpZgbTJjWgRMmZC1KFLIexISxTj5Aswbmgopq0V6pMeY-4zaxZDKFQWIMs11-YfdBD2vpfPdX3l2vWXVJqVxnR5HGdPU74WH404yomrsII215ble7gwhuhqC5fMBpIUyQyul2ntC19homDBXAOhVsQ73iIV4ALBn9LsO7RV-a5FoCtk6LOEXOf7-VkhIoXwV7bq9S4yBH0aMOR2CNMyVWw"/>
+<span class="bg-white px-2 py-1 rounded text-[10px] text-on-surface-variant shadow-sm mt-1">Oxford</span>
+</div>
+<div class="absolute bottom-[10%] left-[20%] flex flex-col items-center">
+<img class="w-10 h-10 rounded-full border-2 border-white shadow-sm z-10 relative" data-alt="Portrait of a researcher, diverse background, plain background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqAwLOzNXcBffMeTNwnlqlcqVFZ5t-nzeHvhGf5GSl25Fiob4Vfx8Ed_i1iaqdXZXbUii6A6dvghsQ0GbRKfvgQeze7pRs_rSJVjuMcRqOpygBwsB7-d5E86Po_NNZfUv7YxC7l6_ttHlVu-M0B-oZn4TVByn77t1zeOMvWqAbmEeN25mCnKQ-VfRUnVytZEf2C50P6vygYXx9XYapfEXlt4thaT-X78RDgbgHY3rk9SLRy5VKiNf39Q"/>
+</div>
+<div class="absolute bottom-[20%] right-[20%] flex flex-col items-center">
+<img class="w-14 h-14 rounded-full border-2 border-secondary shadow-md z-10 relative" data-alt="Portrait of a female researcher with glasses, plain background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXNUpenP73MF00Xs2kFGtiaJLc8OPMjTtzcbFbSKo2TJr2q4rG_5L4piJjm7JZBqPZTmAS2Y8Jzk517W-RzpkWPuOMPw9oz-MzbVl89SBYvZ-836gueqYOPPQxxLM0MXtK5hg6uIdl02xJKY6cIEoG66L1znMFaSyFitJnOOECkuv7JgknDt4AVk0SyJjga8wywlo1Lm95nCrH9YR0GqDY3lELF08rdd8KBWKVxouM-49zmYJrErxWBQ"/>
+<span class="bg-secondary text-white px-2 py-1 rounded text-[10px] font-bold shadow-sm mt-1">Active</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Find New Collaborators (Span 4) -->
+<section class="lg:col-span-4 bg-primary-container text-white rounded-2xl p-6 shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-20">
+<span class="material-symbols-outlined text-[120px]">person_add</span>
+</div>
+<div class="relative z-10">
+<h3 class="font-headline-md text-headline-md mb-2">Expand Your Network</h3>
+<p class="font-body-md text-body-md text-inverse-primary mb-6">Discover researchers with matching methodology profiles and recent publications in your field.</p>
+<div class="space-y-4 mb-6">
+<div class="bg-white/10 rounded-lg p-3 flex items-center gap-3 backdrop-blur-sm border border-white/5">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Small headshot of a male researcher." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdzQHawlIlRu_iBFhEZWpN7yx5m0XItoHcT7avClpDSW0EExzEtVy1BVL5uKOyhPqwqXE8f5Tl48ZbvQTRfO31kCp_KAESStHh8KF6SFOWw9ceHC_iGHQwW1jRuMhEfRjc76FJb0p7i3FTxLBQQLyE3ZT9Z1oUm9-ZIXbqa1WJg3MdIsud2DIsLi-J_xsVxut9b3hOQ3xNuVmPXPk2Urkd0p9qlk6viSBNnwPum3YJgv3Aezzqq1oB8A"/>
+<div>
+<p class="font-label-md text-label-md text-white">Dr. A. Schmidt</p>
+<p class="text-[12px] text-inverse-primary">Max Planck Institute • 94% Match</p>
+</div>
+</div>
+<div class="bg-white/10 rounded-lg p-3 flex items-center gap-3 backdrop-blur-sm border border-white/5">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Small headshot of a female researcher." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3K4um-MSFgAZlrSSz20DioRXbIuuXjhcmCM9KkxC4VJ_bMOhI_vNfbqlZoD8YaN3kEWhTI5dVOhyjkITnZJDGJ-di3RRHiQyT7ambJpYOLJgyaW0Ao8TQ19qVhIb2yxQ7nSeliaxODDGiVkn1D8MBOCD-i7PKGxnORI5PwRraLgeKUVeWntt0w2ENIYtjzTIcAlA-bxzU7Aqoycvo1VC-_Sy-CsbJfcZ1xOSnZq0K1bfbnUkyxWvdMg"/>
+<div>
+<p class="font-label-md text-label-md text-white">Dr. L. Gomez</p>
+<p class="text-[12px] text-inverse-primary">Stanford • 88% Match</p>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full bg-white text-primary-container font-button text-button py-3 rounded-full hover:bg-surface-container-low transition-colors z-10 relative shadow-md">
+                        View All Suggestions
+                    </button>
+</section>
+<!-- Active Research Projects (Span 12) -->
+<section class="lg:col-span-12">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-label-md text-[18px] font-bold text-primary">Active Research Projects</h3>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Project Card 1 -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-surface-variant hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-[12px] font-bold">Data Analysis</span>
+<span class="material-symbols-outlined text-outline">bookmark_border</span>
+</div>
+<h4 class="font-label-md text-[16px] text-primary mb-2">Quantum Neural Mapping</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-6 line-clamp-2">Investigating the intersection of quantum computing models and biological neural network simulations.</p>
+<div class="mb-4">
+<div class="flex justify-between text-[12px] text-on-surface-variant mb-1">
+<span>Progress</span>
+<span>65%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-secondary h-2 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-outline-variant pt-4 mt-4">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Collaborator headshot 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAn4bQPfA0WTtHhss5UMPgiIXebjXK_8GiCDdu1T1zEHkldvRsRctY85nUoLjomCk_lcmhh021HvBQSM3sd7QKwBVuNy6EvRxzi_QSvDC7fJ2ZpdEpQCkMeTYgsjieZiOEEliO1dXkWMvd59H7zkDeYN7ytpQl2EvA1yAhE8-CQSLmKs6f5K_QXs9whGcGwlzhYKU95R5KDIG_3u7NRurnOzSJMYXxRunt-c849DVMHZpXVtgpTpBv3qw"/>
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Collaborator headshot 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf-w2mQDSwS2r58G97cE5pRz4u6cJamH_UyssYFquuRQ5vNpnwX3fm8Mayxn6ChfoOBDgwqz6s01hsudL71eVY_iumPESxlXJZFaY9QqLuBZ_d_-umULewIu0vMYiwLnicaoXjytuIWgjjwijdzwYT70D4QBEL5-gBHK3t2JCsDRj8k9ZIc92B_1TzK7vuPcTwRXVemNkfLoFA8vwj-Ex2cC8UJT5OZncjQlaFEsDurAy9amDqjhWbZQ"/>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container flex items-center justify-center text-[10px] font-bold text-on-surface-variant">+3</div>
+</div>
+<span class="text-[12px] text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">calendar_today</span> Due Nov</span>
+</div>
+</div>
+<!-- Project Card 2 -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-surface-variant hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-full text-[12px] font-bold">Peer Review</span>
+<span class="material-symbols-outlined text-outline">bookmark_border</span>
+</div>
+<h4 class="font-label-md text-[16px] text-primary mb-2">Climate Impact Synthesis</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-6 line-clamp-2">Meta-analysis of regional climate shifts over the past decade utilizing new satellite datasets.</p>
+<div class="mb-4">
+<div class="flex justify-between text-[12px] text-on-surface-variant mb-1">
+<span>Progress</span>
+<span>90%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-error h-2 rounded-full" style="width: 90%"></div>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-outline-variant pt-4 mt-4">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Collaborator headshot 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYmD_2rGe7en3aZJ1X21VMdkHhtDwrjJhMydKlK5Al5_6ZVq8LyhGAoQ2za6jvEH4z_wgyjuTPCzOJE4Vbpdxt3F5g4MFoeuRpmI-_QLGryhqhMWdyGyQqGM5M6ZXpA5NL6rxdlGG0XpJdwBwscE3w83kLsOVPejt6v4wwSUHo6FwgKaNO6TJ21QWjG2IOMSnPuoa3w8fmrRZijiD99lHLSLZm1xignHqQ0X-vEOG-lgJlUbW7jhQdDg"/>
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Collaborator headshot 4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9vQhWA8naJ1r1xwpAclTysWcPqJ41TnZuTHapkJTnPqzhFutejcus_ar_nXQ8nVVCEiCiKbaH0vBBooaiDoidOiynLbsSWGBPTyaCotrkAP9NPUMlmoD-zmlLwiLKFBk4SeSd1z2rBRL0mDhagulfx_vXtN1AXLbh9ehVsIlrlYEsfXajxqOyt4AENuDr9IPaPL-QBPGCiSB8y9UrPbKqz2zRDzIkTcnBsbmxyR3ZJGqX38mTKIJQqA"/>
+</div>
+<span class="text-[12px] text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">calendar_today</span> Due Sep</span>
+</div>
+</div>
+<!-- Project Card 3 (Add New) -->
+<div class="bg-surface-bright rounded-2xl p-6 border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-center hover:bg-surface-container-low transition-colors cursor-pointer min-h-[250px]">
+<div class="w-12 h-12 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center mb-4">
+<span class="material-symbols-outlined">add</span>
+</div>
+<h4 class="font-label-md text-[16px] text-primary mb-2">Initiate New Project</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant">Setup a new collaboration workspace and invite peers.</p>
+</div>
+</div>
+</section>
+<!-- Institutional Collaborations (Span 12) -->
+<section class="lg:col-span-12 bg-white rounded-2xl p-0 shadow-sm border border-surface-variant overflow-hidden flex flex-col md:flex-row">
+<div class="p-6 md:w-1/3 flex flex-col border-r border-outline-variant bg-surface-container-lowest z-10">
+<h3 class="font-label-md text-[18px] font-bold text-primary mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">public</span> Global Partnerships
+                        </h3>
+<p class="font-body-md text-[14px] text-on-surface-variant mb-6">Active institutional agreements and shared resource hubs.</p>
+<div class="space-y-4 flex-1 overflow-y-auto pr-2">
+<div class="p-3 rounded-lg border border-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<h4 class="font-label-md text-[14px] text-primary">CERN</h4>
+<p class="text-[12px] text-on-surface-variant flex justify-between mt-1"><span>Geneva, CH</span> <span class="text-secondary font-bold">3 Active Projects</span></p>
+</div>
+<div class="p-3 rounded-lg border border-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer bg-surface-container-low">
+<h4 class="font-label-md text-[14px] text-primary">MIT Media Lab</h4>
+<p class="text-[12px] text-on-surface-variant flex justify-between mt-1"><span>Cambridge, USA</span> <span class="text-secondary font-bold">1 Active Project</span></p>
+</div>
+<div class="p-3 rounded-lg border border-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<h4 class="font-label-md text-[14px] text-primary">University of Tokyo</h4>
+<p class="text-[12px] text-on-surface-variant flex justify-between mt-1"><span>Tokyo, JP</span> <span class="text-secondary font-bold">Resource Sharing</span></p>
+</div>
+</div>
+<button class="mt-4 w-full border border-primary text-primary font-button text-button py-2 rounded-full hover:bg-surface-container-low transition-colors">
+                            View All Directory
+                        </button>
+</div>
+<!-- Map Visualization Area -->
+<div class="bg-surface-container-highest flex-1 relative min-h-[300px]" data-location="World Map" style="">
+<!-- Abstract Map Background representation -->
+<div class="absolute inset-0 bg-cover bg-center opacity-50" data-alt="A clean, minimalist vector-style world map visualization in soft grey and white tones, suitable for a professional data dashboard background. High key lighting, modern academic aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDP9Tj-4LKBQiVlpGnATcsMCMNDnxA_mj2E1uXAKhvTuPlNjBqcxJUzeur_P2biHvqyY23SbOyGMHvBNe5M6eFxfHpxvchrl3-pOY8BhH4vmOogkms8Ly_VXV0VmnduYuD5bAPJzfT27yieIfTfO-mulbQvIJe3OY2gVNiLIUrYWdsIeg14dow17d46SHIW3vHRWPR04Ixwsjx3qoNPLH3rsS5ymEtQtSu7p49LRCQ2fYHPpO5EFZcJUQ')"></div>
+<!-- Map Pins -->
+<div class="absolute top-[30%] left-[20%] flex flex-col items-center">
+<div class="w-3 h-3 bg-secondary rounded-full animate-pulse"></div>
+<span class="bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-bold text-primary shadow-sm mt-1 border border-outline-variant">MIT</span>
+</div>
+<div class="absolute top-[25%] left-[50%] flex flex-col items-center">
+<div class="w-3 h-3 bg-secondary rounded-full"></div>
+</div>
+<div class="absolute top-[40%] right-[15%] flex flex-col items-center">
+<div class="w-3 h-3 bg-outline rounded-full"></div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest text-on-surface-variant font-label-md text-label-md w-full py-8 mt-auto border-t border-outline-variant">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-container-max mx-auto gap-4">
+<div class="font-headline-md text-primary">SCNA</div>
+<div class="flex gap-4 flex-wrap justify-center">
+<a class="text-on-surface-variant/70 hover:text-primary hover:underline transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant/70 hover:text-primary hover:underline transition-colors duration-200" href="#">Terms of Service</a>
+<a class="text-on-surface-variant/70 hover:text-primary hover:underline transition-colors duration-200" href="#">API Documentation</a>
+<a class="text-on-surface-variant/70 hover:text-primary hover:underline transition-colors duration-200" href="#">Contact Support</a>
+</div>
+<div class="text-[12px] text-on-surface-variant/70">
+                    © 2024 SCNA. Scientific Collaboration Network Analyzer. All Rights Reserved.
+                </div>
+</div>
+</footer>
+</div>
+</body></html>
