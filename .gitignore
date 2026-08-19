@@ -11,3 +11,4 @@ Thumbs.db
 .env
 
 # See backend/.gitignore and frontend/.gitignore for stack-specific ignores
+README.local.md
