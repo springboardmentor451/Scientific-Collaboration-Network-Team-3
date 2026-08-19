@@ -1,0 +1,1 @@
+# GitHub Actions CI — install backend deps, run pytest; install frontend deps, run build

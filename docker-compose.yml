@@ -1,0 +1,1 @@
+# docker-compose — services: backend (FastAPI), frontend (React), db (PostgreSQL), redis, adminer (optional)

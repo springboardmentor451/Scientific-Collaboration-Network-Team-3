@@ -1,0 +1,1 @@
+# Tests: registration, login, JWT

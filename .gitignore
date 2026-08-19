@@ -1,0 +1,13 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Env
+.env
+
+# See backend/.gitignore and frontend/.gitignore for stack-specific ignores
