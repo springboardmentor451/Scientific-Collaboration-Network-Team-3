@@ -4,10 +4,13 @@ sqlalchemy
 alembic
 pydantic
 pydantic-settings
+email-validator
+python-dotenv
 psycopg2-binary
 redis
 python-jose[cryptography]
 passlib[bcrypt]
+bcrypt==4.2.1
 python-multipart
 authlib
 boto3

@@ -1,15 +1,31 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { mockUsers } from '../mocks/users';
 import { clearOtpPending } from '../utils/otpSession';
 
 export const AuthContext = createContext(null);
 
+/**
+ * Normalise the payload returned by /auth/verify-otp.
+ * Real API: { access_token, token_type, user: { id, username, email, role, is_active } }
+ * Mock:     { access_token, token_type, user: { ... } }
+ */
 function normalizeSession(payload) {
   if (!payload) return null;
-  const token = payload.access_token || payload.token || payload.user?.token;
-  const user = payload.user || payload;
+
+  const token =
+    payload.access_token || payload.token || payload.user?.token;
+
+  // Support both nested user object and flat payload
+  const user = payload.user || null;
+
   if (!token || !user) return null;
-  return { user, token };
+
+  // Ensure we always have a `name` field for display purposes
+  const normalizedUser = {
+    ...user,
+    name: user.name || user.username || user.email || 'User',
+  };
+
+  return { user: normalizedUser, token };
 }
 
 export const AuthProvider = ({ children }) => {
@@ -23,10 +39,14 @@ export const AuthProvider = ({ children }) => {
 
     if (storedUser && storedToken) {
       try {
-        setUser(JSON.parse(storedUser));
+        const parsed = JSON.parse(storedUser);
+        // Ensure legacy stored users always have a name field
+        setUser({ ...parsed, name: parsed.name || parsed.username || parsed.email || 'User' });
         setToken(storedToken);
       } catch (e) {
         console.error('Failed to parse user from local storage', e);
+        localStorage.removeItem('scna_user');
+        localStorage.removeItem('scna_token');
       }
     }
     setIsLoading(false);
@@ -43,12 +63,6 @@ export const AuthProvider = ({ children }) => {
     return true;
   };
 
-  const login = (role) => {
-    const mockUser = mockUsers[role];
-    if (!mockUser) return false;
-    return completeLogin({ user: mockUser, access_token: mockUser.token });
-  };
-
   const logout = () => {
     setUser(null);
     setToken(null);
@@ -58,7 +72,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, role: user?.role, token, login, completeLogin, logout, isLoading }}>
+    <AuthContext.Provider
+      value={{ user, role: user?.role, token, completeLogin, logout, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

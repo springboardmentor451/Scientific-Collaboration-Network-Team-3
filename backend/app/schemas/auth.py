@@ -1,4 +1,6 @@
-from pydantic import BaseModel, EmailStr
+from typing import Any, Dict, Optional
+
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 
 class UserRegister(BaseModel):
@@ -17,18 +19,30 @@ class OTPVerify(BaseModel):
     otp: str
 
 
+class ResendOTPRequest(BaseModel):
+    email: EmailStr
+
+
 class UserResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     username: str
     email: EmailStr
-
-    class Config:
-        from_attributes = True
+    role: str = "Researcher"
+    is_active: bool = True
 
 
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+
+class TokenWithUser(BaseModel):
+    """Returned after OTP verification — includes JWT and resolved user object."""
+    access_token: str
+    token_type: str
+    user: Dict[str, Any]
 
 
 class OTPResponse(BaseModel):

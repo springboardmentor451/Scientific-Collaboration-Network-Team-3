@@ -1,11 +1,22 @@
 import React from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { dashboardService } from '../../services/dashboardService';
 import CollaborationNetworkGraph from '../../components/charts/CollaborationNetworkGraph';
 import PageHeader from '../../components/common/PageHeader';
 
 export default function ResearcherDashboard() {
   const { user } = useAuth();
-  
+  const [dashboardData, setDashboardData] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    dashboardService
+      .getDashboardData('Researcher')
+      .then(setDashboardData)
+      .catch((err) => console.error('Dashboard error:', err))
+      .finally(() => setLoading(false));
+  }, []);
+
   // Fake graph data for the network context
   const mockGraphData = {
     nodes: [
@@ -18,6 +29,8 @@ export default function ResearcherDashboard() {
       { source: '2', target: '3', value: 1 },
     ]
   };
+
+  const fmt = (n) => (n == null ? '—' : n.toLocaleString());
 
   return (
     <>
@@ -38,7 +51,9 @@ export default function ResearcherDashboard() {
             </div>
           </div>
           <div>
-            <div className="font-headline-lg text-on-surface font-bold leading-none">142</div>
+            <div className="font-headline-lg text-on-surface font-bold leading-none">
+              {loading ? '…' : fmt(dashboardData?.stats?.totalPublications || dashboardData?.total_publications)}
+            </div>
             <p className="font-body-md text-[12px] text-secondary mt-2 flex items-center gap-1 font-semibold">
               <span className="material-symbols-outlined text-[16px]">arrow_upward</span> +12% from last year
             </p>
@@ -54,7 +69,9 @@ export default function ResearcherDashboard() {
             </div>
           </div>
           <div>
-            <div className="font-headline-lg text-on-surface font-bold leading-none">8</div>
+            <div className="font-headline-lg text-on-surface font-bold leading-none">
+              {loading ? '…' : fmt(dashboardData?.stats?.activeProjects || dashboardData?.total_conferences)}
+            </div>
             <p className="font-body-md text-[12px] text-on-surface-variant mt-2 flex items-center gap-1">
               <span className="material-symbols-outlined text-[16px]">pending_actions</span> 3 nearing completion
             </p>
@@ -70,7 +87,9 @@ export default function ResearcherDashboard() {
             </div>
           </div>
           <div>
-            <div className="font-headline-lg text-on-surface font-bold leading-none">3,492</div>
+            <div className="font-headline-lg text-on-surface font-bold leading-none">
+              {loading ? '…' : fmt(dashboardData?.stats?.citations || dashboardData?.total_citations)}
+            </div>
             <p className="font-body-md text-[12px] text-secondary mt-2 flex items-center gap-1 font-semibold">
               <span className="material-symbols-outlined text-[16px]">trending_up</span> +450 this month
             </p>
@@ -86,7 +105,9 @@ export default function ResearcherDashboard() {
             </div>
           </div>
           <div>
-            <div className="font-headline-lg font-bold leading-none">9.4</div>
+            <div className="font-headline-lg font-bold leading-none">
+              {loading ? '…' : fmt(dashboardData?.stats?.collaborators || dashboardData?.total_collaborations)}
+            </div>
             <p className="font-body-md text-[12px] mt-2">Top 5% globally</p>
           </div>
         </div>

@@ -1,108 +1,84 @@
-from fastapi import APIRouter, Depends, HTTPException
+from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-
-from app.schemas.institution import (
-    InstitutionCreate,
-    InstitutionUpdate,
-    InstitutionResponse,
-)
-
+from app.models.user import User
+from app.schemas.institution import InstitutionCreate, InstitutionResponse, InstitutionUpdate
+from app.security import get_current_user
 from app.services.institution_service import (
+    create_institution,
+    delete_institution,
     get_all_institutions,
     get_institution,
-    create_institution,
     update_institution,
-    delete_institution,
 )
 
 router = APIRouter(
     prefix="/institutions",
-    tags=["Institutions"],
+    tags=["Institutions"]
 )
 
 
-@router.get(
-    "/",
-    response_model=list[InstitutionResponse]
-)
-def get_all(db: Session = Depends(get_db)):
+@router.post("/", response_model=InstitutionResponse)
+def create(
+    institution: InstitutionCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return create_institution(db, institution, current_user)
+
+
+@router.get("/", response_model=List[InstitutionResponse])
+def get_all(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     return get_all_institutions(db)
 
 
-@router.get(
-    "/{institution_id}",
-    response_model=InstitutionResponse
-)
+@router.get("/{institution_id}", response_model=InstitutionResponse)
 def get_one(
     institution_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    institution = get_institution(db, institution_id)
-
-    if not institution:
+    inst = get_institution(db, institution_id)
+    if not inst:
         raise HTTPException(
-            status_code=404,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail="Institution not found"
         )
-
-    return institution
-
-
-@router.post(
-    "/",
-    response_model=InstitutionResponse
-)
-def create(
-    institution: InstitutionCreate,
-    db: Session = Depends(get_db)
-):
-    return create_institution(db, institution)
+    return inst
 
 
-@router.put(
-    "/{institution_id}",
-    response_model=InstitutionResponse
-)
+@router.put("/{institution_id}", response_model=InstitutionResponse)
 def update(
     institution_id: int,
     institution: InstitutionUpdate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    updated = update_institution(
-        db,
-        institution_id,
-        institution
-    )
-
+    updated = update_institution(db, institution_id, institution, current_user)
     if not updated:
         raise HTTPException(
-            status_code=404,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail="Institution not found"
         )
-
     return updated
 
 
-@router.delete(
-    "/{institution_id}"
-)
+@router.delete("/{institution_id}")
 def delete(
     institution_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    deleted = delete_institution(
-        db,
-        institution_id
-    )
-
-    if not deleted:
+    success = delete_institution(db, institution_id, current_user)
+    if not success:
         raise HTTPException(
-            status_code=404,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail="Institution not found"
         )
-
-    return {
-        "message": "Institution deleted successfully"
-    }
+    return {"message": "Institution deleted successfully"}

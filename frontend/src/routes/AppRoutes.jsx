@@ -90,7 +90,7 @@ export default function AppRoutes() {
         </Route>
 
         {/* Shared features with specific access control */}
-        <Route element={<ProtectedRoute allowedRoles={['Institution Admin']} />}>
+        <Route element={<ProtectedRoute allowedRoles={['Researcher', 'Institution Admin', 'System Admin']} />}>
           <Route path="/researchers" element={<ResearcherList />} />
           <Route path="/researchers/:id" element={<ResearcherProfile />} />
         </Route>

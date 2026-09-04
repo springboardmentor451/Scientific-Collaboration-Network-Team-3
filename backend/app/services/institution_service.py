@@ -19,7 +19,16 @@ def get_institution(db: Session, institution_id: int):
     )
 
 
-def create_institution(db: Session, institution: InstitutionCreate):
+from fastapi import HTTPException, status
+from app.models.user import User
+
+def create_institution(db: Session, institution: InstitutionCreate, current_user: User):
+    if current_user.role != "System Admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only System Admins can create institutions."
+        )
+
     new_institution = Institution(**institution.model_dump())
 
     db.add(new_institution)
@@ -33,7 +42,14 @@ def update_institution(
     db: Session,
     institution_id: int,
     institution: InstitutionUpdate,
+    current_user: User,
 ):
+    if current_user.role != "System Admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only System Admins can update institutions."
+        )
+
     existing = get_institution(db, institution_id)
 
     if not existing:
@@ -50,7 +66,13 @@ def update_institution(
     return existing
 
 
-def delete_institution(db: Session, institution_id: int):
+def delete_institution(db: Session, institution_id: int, current_user: User):
+    if current_user.role != "System Admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only System Admins can delete institutions."
+        )
+
     institution = get_institution(db, institution_id)
 
     if not institution:

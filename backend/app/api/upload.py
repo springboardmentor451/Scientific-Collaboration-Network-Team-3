@@ -17,6 +17,10 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models.publication import Publication
+from app.models.user import User
+from app.security import get_current_user
+
+MAX_PDF_SIZE_BYTES = 20 * 1024 * 1024  # 20 MB
 
 
 router = APIRouter(
@@ -54,6 +58,7 @@ async def upload_publication_pdf(
     status: str = Form("draft"),
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
     # --------------------------------------------------------
     # Check file exists
@@ -86,6 +91,18 @@ async def upload_publication_pdf(
             status_code=400,
             detail="Uploaded file must be a PDF.",
         )
+
+    # --------------------------------------------------------
+    # Check file size limit (20 MB)
+    # --------------------------------------------------------
+
+    content = await file.read()
+    if len(content) > MAX_PDF_SIZE_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail=f"File too large. Maximum allowed size is {MAX_PDF_SIZE_BYTES // (1024*1024)} MB.",
+        )
+    await file.seek(0)
 
     # --------------------------------------------------------
     # Check duplicate DOI
@@ -209,6 +226,7 @@ async def upload_publication_pdf(
 def download_publication_pdf(
     publication_id: int,
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
     # --------------------------------------------------------
     # Find publication

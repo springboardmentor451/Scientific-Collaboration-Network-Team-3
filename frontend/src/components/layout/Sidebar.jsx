@@ -114,7 +114,7 @@ export default function Sidebar() {
         </nav>
 
         <div className="px-2 mt-auto pt-4 border-t border-outline-variant flex flex-col gap-1">
-          <a href="#help" className="text-on-surface-variant hover:bg-surface-container-high rounded-xl flex items-center gap-3 px-4 py-3">
+          <a href="https://support.scna.org" target="_blank" rel="noopener noreferrer" className="text-on-surface-variant hover:bg-surface-container-high rounded-xl flex items-center gap-3 px-4 py-3">
             <span className="material-symbols-outlined">help</span>
             <span className="font-label-sm">Help Center</span>
           </a>

@@ -1,40 +1,58 @@
-from fastapi import APIRouter, Depends, HTTPException
+from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-
-from app.schemas.citation import (
-    CitationCreate,
-    CitationUpdate,
-    CitationResponse,
+from app.models.user import User
+from app.schemas.citation import CitationCreate, CitationResponse, CitationUpdate
+from app.security import get_current_user
+from app.services.citation_service import (
+    create_citation,
+    delete_citation,
+    get_all_citations,
+    get_citation,
+    update_citation,
 )
-
-from app.services import citation_service
 
 router = APIRouter(
     prefix="/citations",
-    tags=["Citations"],
+    tags=["Citations"]
 )
 
 
-@router.get("/", response_model=list[CitationResponse])
-def get_all(db: Session = Depends(get_db)):
-    return citation_service.get_all(db)
+@router.post("/", response_model=CitationResponse)
+def create(
+    citation: CitationCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return create_citation(db, citation, current_user)
+
+
+@router.get("/", response_model=List[CitationResponse])
+def get_all(
+    skip: int = 0,
+    limit: int = 100,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return get_all_citations(db, skip, limit)
 
 
 @router.get("/{citation_id}", response_model=CitationResponse)
-def get_one(citation_id: int, db: Session = Depends(get_db)):
-    citation = citation_service.get_by_id(db, citation_id)
-
+def get_one(
+    citation_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    citation = get_citation(db, citation_id)
     if not citation:
-        raise HTTPException(status_code=404, detail="Citation not found")
-
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Citation not found"
+        )
     return citation
-
-
-@router.post("/", response_model=CitationResponse)
-def create(citation: CitationCreate, db: Session = Depends(get_db)):
-    return citation_service.create(db, citation)
 
 
 @router.put("/{citation_id}", response_model=CitationResponse)
@@ -42,20 +60,27 @@ def update(
     citation_id: int,
     citation: CitationUpdate,
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    updated = citation_service.update(db, citation_id, citation)
-
+    updated = update_citation(db, citation_id, citation, current_user)
     if not updated:
-        raise HTTPException(status_code=404, detail="Citation not found")
-
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Citation not found"
+        )
     return updated
 
 
 @router.delete("/{citation_id}")
-def delete(citation_id: int, db: Session = Depends(get_db)):
-    deleted = citation_service.delete(db, citation_id)
-
-    if not deleted:
-        raise HTTPException(status_code=404, detail="Citation not found")
-
+def delete(
+    citation_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    success = delete_citation(db, citation_id, current_user)
+    if not success:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Citation not found"
+        )
     return {"message": "Citation deleted successfully"}

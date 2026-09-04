@@ -20,7 +20,7 @@ export default function AppShell() {
             <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
               <div className="font-headline-md text-primary text-xl">SCNA</div>
               <div className="text-sm text-on-surface-variant">
-                © 2024 SCNA. Scientific Collaboration Network Analyzer. All Rights Reserved.
+                © {new Date().getFullYear()} SCNA. Scientific Collaboration Network Analyzer. All Rights Reserved.
               </div>
               <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
                 <a href="#privacy" className="text-sm text-on-surface-variant hover:text-primary">Privacy Policy</a>

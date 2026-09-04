@@ -1,7 +1,7 @@
 import os
 import secrets
 import smtplib
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
 
 from dotenv import load_dotenv
@@ -17,7 +17,7 @@ SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USERNAME = os.getenv("SMTP_USERNAME")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 SMTP_FROM_EMAIL = os.getenv("SMTP_FROM_EMAIL", SMTP_USERNAME)
-SMTP_FROM_NAME = os.getenv("SMTP_FROM_NAME", "NOVA FORM")
+SMTP_FROM_NAME = os.getenv("SMTP_FROM_NAME", "SCNA")
 
 OTP_EXPIRE_MINUTES = int(
     os.getenv("OTP_EXPIRE_MINUTES", "5")
@@ -69,7 +69,7 @@ def send_otp_email(
 
     message = EmailMessage()
 
-    message["Subject"] = "NOVA FORM - Your OTP Verification Code"
+    message["Subject"] = "SCNA - Your OTP Verification Code"
     message["From"] = (
         f"{SMTP_FROM_NAME} <{SMTP_FROM_EMAIL}>"
     )
@@ -79,16 +79,16 @@ def send_otp_email(
         f"""
 Hello,
 
-Your NOVA FORM verification code is:
+Your SCNA verification code is:
 
 {otp}
 
 This OTP is valid for {OTP_EXPIRE_MINUTES} minutes.
 
-If you did not try to sign in to NOVA FORM, please ignore this email.
+If you did not try to sign in to SCNA (Scientific Collaboration Network Analyzer), please ignore this email.
 
 Regards,
-NOVA FORM Team
+SCNA Team
 """
     )
 
@@ -133,7 +133,7 @@ def create_and_send_otp(
 
     otp_hash = hash_otp(otp)
 
-    expires_at = datetime.utcnow() + timedelta(
+    expires_at = datetime.now(timezone.utc) + timedelta(
         minutes=OTP_EXPIRE_MINUTES
     )
 
@@ -143,7 +143,7 @@ def create_and_send_otp(
         expires_at=expires_at,
         is_verified=False,
         attempts=0,
-        created_at=datetime.utcnow()
+        created_at=datetime.now(timezone.utc)
     )
 
     db.add(otp_record)
@@ -183,7 +183,7 @@ def verify_otp(
         return False
 
     # Check expiry
-    if datetime.utcnow() > otp_record.expires_at:
+    if datetime.now(timezone.utc) > otp_record.expires_at:
         return False
 
     # Check maximum attempts

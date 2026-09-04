@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import os
 
 from dotenv import load_dotenv
@@ -53,7 +53,7 @@ def verify_password(
 def create_access_token(data: dict) -> str:
     to_encode = data.copy()
 
-    expire = datetime.utcnow() + timedelta(
+    expire = datetime.now(timezone.utc) + timedelta(
         minutes=ACCESS_TOKEN_EXPIRE_MINUTES
     )
 
@@ -122,3 +122,32 @@ def get_current_user(
         )
 
     return user
+
+
+# -------------------------------------------------
+# Role-Based Access Control
+# -------------------------------------------------
+
+def require_role(*allowed_roles: str):
+    """Dependency factory: returns a dependency that checks the
+    current user's role against the allowed list.
+
+    Usage:
+        @router.get("/admin-only", dependencies=[Depends(require_role("System Admin"))])
+        def admin_view(...): ...
+
+    Or inject to get the user back:
+        current_user = Depends(require_role("Researcher", "Institution Admin"))
+    """
+
+    def role_checker(
+        current_user=Depends(get_current_user),
+    ):
+        if current_user.role not in allowed_roles:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Role '{current_user.role}' is not authorized for this action",
+            )
+        return current_user
+
+    return role_checker

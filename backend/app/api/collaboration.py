@@ -1,114 +1,117 @@
-from fastapi import APIRouter, Depends, HTTPException
+from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-
+from app.models.user import User
 from app.schemas.collaboration import (
     CollaborationCreate,
-    CollaborationUpdate,
     CollaborationResponse,
+    CollaborationUpdate,
+    NetworkResponse
 )
-
-from app.services import collaboration_service
+from app.security import get_current_user
+from app.services.collaboration_service import (
+    create_collaboration,
+    delete_collaboration,
+    get_all_collaborations,
+    get_collaboration,
+    get_network,
+    update_collaboration,
+)
 
 router = APIRouter(
     prefix="/collaborations",
-    tags=["Collaborations"],
+    tags=["Collaborations"]
 )
 
 
-@router.get("/", response_model=list[CollaborationResponse])
-def get_all(db: Session = Depends(get_db)):
-    return collaboration_service.get_all(db)
-
-
-@router.get("/{collaboration_id}", response_model=CollaborationResponse)
-def get_one(
-    collaboration_id: int,
+@router.get("/network", response_model=NetworkResponse)
+def network(
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    collaboration = collaboration_service.get_by_id(
-        db,
-        collaboration_id,
-    )
-
-    if not collaboration:
-        raise HTTPException(
-            status_code=404,
-            detail="Collaboration not found",
-        )
-
-    return collaboration
+    return get_network(db)
 
 
 @router.post("/", response_model=CollaborationResponse)
 def create(
-    collaboration: CollaborationCreate,
+    collab: CollaborationCreate,
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    try:
-        return collaboration_service.create(
-            db,
-            collaboration,
-        )
-    except Exception as e:
+    if current_user.role not in ["System Admin", "Institution Admin"]:
         raise HTTPException(
-            status_code=500,
-            detail=str(e),
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only Admins can manage collaborations directly."
         )
+    return create_collaboration(db, collab)
 
 
-@router.put("/{collaboration_id}", response_model=CollaborationResponse)
+@router.get("/", response_model=List[CollaborationResponse])
+def get_all(
+    skip: int = 0,
+    limit: int = 100,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return get_all_collaborations(db, skip, limit)
+
+
+@router.get("/{collab_id}", response_model=CollaborationResponse)
+def get_one(
+    collab_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    c = get_collaboration(db, collab_id)
+    if not c:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Collaboration not found"
+        )
+    return c
+
+
+@router.put("/{collab_id}", response_model=CollaborationResponse)
 def update(
-    collaboration_id: int,
-    collaboration: CollaborationUpdate,
+    collab_id: int,
+    collab: CollaborationUpdate,
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    try:
-        updated = collaboration_service.update(
-            db,
-            collaboration_id,
-            collaboration,
-        )
-
-        if not updated:
-            raise HTTPException(
-                status_code=404,
-                detail="Collaboration not found",
-            )
-
-        return updated
-
-    except Exception as e:
+    if current_user.role not in ["System Admin", "Institution Admin"]:
         raise HTTPException(
-            status_code=500,
-            detail=str(e),
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only Admins can manage collaborations directly."
         )
 
+    updated = update_collaboration(db, collab_id, collab)
+    if not updated:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Collaboration not found"
+        )
+    return updated
 
-@router.delete("/{collaboration_id}")
+
+@router.delete("/{collab_id}")
 def delete(
-    collaboration_id: int,
+    collab_id: int,
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    try:
-        deleted = collaboration_service.delete(
-            db,
-            collaboration_id,
-        )
-
-        if not deleted:
-            raise HTTPException(
-                status_code=404,
-                detail="Collaboration not found",
-            )
-
-        return {
-            "message": "Collaboration deleted successfully"
-        }
-
-    except Exception as e:
+    if current_user.role not in ["System Admin", "Institution Admin"]:
         raise HTTPException(
-            status_code=500,
-            detail=str(e),
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only Admins can manage collaborations directly."
         )
+
+    success = delete_collaboration(db, collab_id)
+    if not success:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Collaboration not found"
+        )
+    return {"message": "Collaboration deleted successfully"}

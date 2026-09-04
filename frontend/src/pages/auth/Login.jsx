@@ -138,7 +138,7 @@ export default function Login() {
               />
               <span>Remember me</span>
             </label>
-            <a href="#forgot-password" className="scna-forgot-link">
+            <a href="mailto:support@scna.org?subject=Password%20Reset%20Request" className="scna-forgot-link">
               Forgot your password?
             </a>
           </div>

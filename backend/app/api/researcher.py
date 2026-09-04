@@ -41,7 +41,8 @@ def create(
 ):
     return create_researcher(
         db,
-        researcher
+        researcher,
+        current_user,
     )
 
 
@@ -54,10 +55,13 @@ def create(
     response_model=list[ResearcherResponse]
 )
 def get_all(
+    skip: int = 0,
+    limit: int = 100,
+    search: str = None,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
-    return get_all_researchers(db)
+    return get_all_researchers(db, skip, limit, search)
 
 
 # -------------------------------------------------
@@ -105,6 +109,7 @@ def update(
         db,
         researcher_id,
         researcher,
+        current_user,
     )
 
     if not updated:
@@ -131,6 +136,7 @@ def delete(
     deleted = delete_researcher(
         db,
         researcher_id,
+        current_user,
     )
 
     if not deleted:

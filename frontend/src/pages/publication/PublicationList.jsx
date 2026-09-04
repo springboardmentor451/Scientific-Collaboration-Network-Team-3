@@ -31,8 +31,8 @@ export default function PublicationList() {
   }, []);
 
   const filtered = publications.filter((pub) => {
-    const matchesQuery = `${pub.title} ${pub.authors?.join(' ') || ''}`.toLowerCase().includes(query.toLowerCase());
-    const matchesType = typeFilter === 'all' || pub.type === typeFilter;
+    const matchesQuery = `${pub.title} ${pub.authors || ''}`.toLowerCase().includes(query.toLowerCase());
+    const matchesType = typeFilter === 'all' || pub.publication_type === typeFilter;
     const matchesStatus = statusFilter === 'all' || pub.status === statusFilter;
     return matchesQuery && matchesType && matchesStatus;
   });

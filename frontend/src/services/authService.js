@@ -24,14 +24,14 @@ export const authService = {
       mockOtpState.expiresAt = Date.now() + OTP_TTL_MS;
       return { otp_required: true };
     }
+    // Backend expects: { email, password }
     const response = await api.post('/auth/login', {
-      identifier: credentials.identifier || credentials.email,
       email: credentials.email,
       password: credentials.password,
-      role: credentials.role,
     });
     return response.data;
   },
+
   verifyOtp: async ({ identifier, otp, role }) => {
     if (USE_MOCKS) {
       await delay(500);
@@ -51,18 +51,25 @@ export const authService = {
         user: mockUser,
       };
     }
-    const response = await api.post('/auth/verify-otp', { identifier, otp });
+    // Backend expects: { email, otp }
+    const response = await api.post('/auth/verify-otp', {
+      email: identifier,
+      otp,
+    });
     return response.data;
   },
+
   resendOtp: async ({ identifier }) => {
     if (USE_MOCKS) {
       await delay(400);
       mockOtpState.expiresAt = Date.now() + OTP_TTL_MS;
       return { otp_required: true };
     }
-    const response = await api.post('/auth/resend-otp', { identifier });
+    // Backend expects: { email }
+    const response = await api.post('/auth/resend-otp', { email: identifier });
     return response.data;
   },
+
   register: async (data) => {
     if (USE_MOCKS) {
       await delay(800);

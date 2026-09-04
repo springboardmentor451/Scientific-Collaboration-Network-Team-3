@@ -1,10 +1,23 @@
 import React from 'react';
 import { useAuth } from '../../hooks/useAuth';
+import { dashboardService } from '../../services/dashboardService';
 import CollaborationNetworkGraph from '../../components/charts/CollaborationNetworkGraph';
 import PageHeader from '../../components/common/PageHeader'; 
 
 export default function InstitutionDashboard() {
   const { user } = useAuth();
+  const [dashboardData, setDashboardData] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    dashboardService
+      .getDashboardData('Institution Admin')
+      .then(setDashboardData)
+      .catch((err) => console.error('Dashboard error:', err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const fmt = (n) => (n == null ? '—' : n.toLocaleString());
 
   const mockGraphData = {
     nodes: [
@@ -32,7 +45,9 @@ export default function InstitutionDashboard() {
             </div>
           </div>
           <div>
-            <div className="font-headline-lg text-on-surface font-bold leading-none">1,204</div>
+            <div className="font-headline-lg text-on-surface font-bold leading-none">
+              {loading ? '…' : fmt(dashboardData?.stats?.totalPublications || dashboardData?.total_publications)}
+            </div>
             <p className="font-body-md text-[12px] text-secondary mt-2 flex items-center gap-1 font-semibold">
               <span className="material-symbols-outlined text-[16px]">arrow_upward</span> +5% YoY
             </p>
@@ -47,7 +62,9 @@ export default function InstitutionDashboard() {
             </div>
           </div>
           <div>
-            <div className="font-headline-lg text-on-surface font-bold leading-none">42</div>
+            <div className="font-headline-lg text-on-surface font-bold leading-none">
+              {loading ? '…' : fmt(dashboardData?.stats?.activeProjects || dashboardData?.total_conferences)}
+            </div>
             <p className="font-body-md text-[12px] text-on-surface-variant mt-2 flex items-center gap-1 font-semibold">
               <span className="material-symbols-outlined text-[16px]">pending</span> 12 pending renewal
             </p>
@@ -62,7 +79,9 @@ export default function InstitutionDashboard() {
             </div>
           </div>
           <div>
-            <div className="font-headline-lg text-on-surface font-bold leading-none">38</div>
+            <div className="font-headline-lg text-on-surface font-bold leading-none">
+              {loading ? '…' : fmt(dashboardData?.stats?.totalResearchers || dashboardData?.total_researchers)}
+            </div>
             <p className="font-body-md text-[12px] text-secondary mt-2 flex items-center gap-1 font-semibold">
               <span className="material-symbols-outlined text-[16px]">add</span> +3 this quarter
             </p>
@@ -77,7 +96,9 @@ export default function InstitutionDashboard() {
             </div>
           </div>
           <div>
-            <div className="font-headline-lg font-bold leading-none">#12</div>
+            <div className="font-headline-lg font-bold leading-none">
+              #{loading ? '…' : fmt(dashboardData?.stats?.citations || 12)}
+            </div>
             <p className="font-body-md text-[12px] mt-2 font-semibold">Top 1% globally</p>
           </div>
         </div>

@@ -5,3 +5,5 @@ storage/uploads/*
 !storage/uploads/.gitkeep
 .pytest_cache/
 *.egg-info/
+test_scna.db
+.venv/
